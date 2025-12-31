@@ -158,3 +158,38 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# ==================== PROJECT SPECIFIC ====================
+
+# Virtual environments
+venv_pipeline/
+
+# Unsloth compiled cache (regenerated automatically)
+unsloth_compiled_cache/
+
+# LaTeX auxiliary files
+report/*.aux
+report/*.fdb_latexmk
+report/*.fls
+report/*.log
+report/*.out
+report/*.synctex.gz
+report/*.toc
+report/*.bbl
+report/*.blg
+
+# Pipeline temporary results (keep only final_summary.json and project_summary.json)
+results/pipeline_results_*.json
+
+# Trained model outputs (large files, keep structure but ignore weights)
+outputs/transformers/*/checkpoint-*/
+outputs/transformers/*/merged_model/
+outputs/unsloth/*/checkpoint-*/
+outputs/unsloth/*/merged_model/
+outputs/ollama/*.gguf
+
+# Data processed files (can be regenerated)
+data/processed/dolly_processed/
+
+# Keep the PDF report but ignore intermediate builds
+!report/main.pdf

@@ -1,0 +1,97 @@
+[
+  {
+    "id": 1,
+    "instruction": "What is a sitcom?",
+    "context": "",
+    "prompt": "### Instruction:\nWhat is a sitcom?\n\n### Response:\n",
+    "reference": "A sitcom is a comedy that typically airs on a television network once per week for 30 minutes.",
+    "generated_transformers": "A sitcom is a comedy show that is filmed on a television set. The characters are typically based on everyday people, and the show is set in a home or a restaurant. Sitcoms are often scripted, with the actors playing characters based on their real-life personality. Some sitcoms are popular all over the world, while others are only popular in their local region.",
+    "generated_unsloth": "A sitcom is a form of comedy television series that usually features a group of people interacting with each other. They may do silly things, make jokes, or engage in witty banter. The sitcom is usually about a family or a group of friends and is a popular genre of television series.",
+    "eval_transformers": {
+      "helpfulness": 4,
+      "factuality": 4,
+      "instruction_following": 5
+    },
+    "eval_unsloth": {
+      "helpfulness": 4,
+      "factuality": 4,
+      "instruction_following": 5
+    }
+  },
+  {
+    "id": 2,
+    "instruction": "Why do people think that cricket is a boring sport?",
+    "context": "",
+    "prompt": "### Instruction:\nWhy do people think that cricket is a boring sport?\n\n### Response:\n",
+    "reference": "People think that cricket is a boring sport because they fundamentally do not understand how the various forms of the game work...",
+    "generated_transformers": "Because cricket is a boring sport, because it is a slow-moving sport. Because it is played on a pitch that is small and slow...",
+    "generated_unsloth": "People think cricket is a boring sport because it is not very fast, and it is not very exciting...",
+    "eval_transformers": {
+      "helpfulness": 2,
+      "factuality": 2,
+      "instruction_following": 3
+    },
+    "eval_unsloth": {
+      "helpfulness": 3,
+      "factuality": 3,
+      "instruction_following": 4
+    }
+  },
+  {
+    "id": 3,
+    "instruction": "Given the following passage about Theodore Roosevelt, please list the main accomplishments during his presidency.",
+    "context": "Roosevelt assumed the presidency at age 42...",
+    "prompt": "### Instruction:\nGiven the following passage about Theodore Roosevelt...\n\n### Response:\n",
+    "reference": "1) Championed the breaking of bad trusts...\n2) Established national parks...",
+    "generated_transformers": "During his presidency, Roosevelt led the United States to victory in the Spanish–American War and was instrumental in the creation of the Panama Canal...",
+    "generated_unsloth": "In his first term, Roosevelt oversaw the completion of the Panama Canal. In 1909, he authorized the building of the Brooklyn Bridge...",
+    "eval_transformers": {
+      "helpfulness": 3,
+      "factuality": 2,
+      "instruction_following": 3
+    },
+    "eval_unsloth": {
+      "helpfulness": 2,
+      "factuality": 1,
+      "instruction_following": 2
+    }
+  },
+  {
+    "id": 4,
+    "instruction": "what can we do when coffee spill on laptop to make it working",
+    "context": "",
+    "prompt": "### Instruction:\nwhat can we do when coffee spill on laptop to make it working\n\n### Response:\n",
+    "reference": "Firstly we need to immediately switch off the laptop. secondly take a cloth and clean it...",
+    "generated_transformers": "Coffee spill on laptop can be a big problem. However, there are a few things you can do to prevent coffee from spilling...",
+    "generated_unsloth": "I don't think there is any way to make it working. We can try to clean it up with a towel...",
+    "eval_transformers": {
+      "helpfulness": 2,
+      "factuality": 2,
+      "instruction_following": 2
+    },
+    "eval_unsloth": {
+      "helpfulness": 2,
+      "factuality": 2,
+      "instruction_following": 2
+    }
+  },
+  {
+    "id": 5,
+    "instruction": "What are the different types of shots in ice hockey",
+    "context": "",
+    "prompt": "### Instruction:\nWhat are the different types of shots in ice hockey\n\n### Response:\n",
+    "reference": "-Slapshot\n-Wrist shot\n-Backhand\n-Snapshot",
+    "generated_transformers": "The different types of shots in ice hockey include:\n1. Puck - A hockey puck...\n2. Slapshot...",
+    "generated_unsloth": "- Goalie saves\n- Slapshot\n- Backhand shot\n- One-timer\n- Snap shot...",
+    "eval_transformers": {
+      "helpfulness": 3,
+      "factuality": 2,
+      "instruction_following": 4
+    },
+    "eval_unsloth": {
+      "helpfulness": 3,
+      "factuality": 3,
+      "instruction_following": 4
+    }
+  }
+]

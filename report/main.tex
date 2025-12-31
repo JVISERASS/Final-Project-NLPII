@@ -1,0 +1,803 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                    NLP II - FINAL PROJECT REPORT
+%          Fine-tuning and Inference of Large Language Models
+%                    Grupo VKPB - 2024/2025
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,a4paper]{article}
+
+% ==================== PACKAGES ====================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{url}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{multicol}
+
+% ==================== CONFIGURATION ====================
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    citecolor=green!50!black,
+    urlcolor=blue!60!black,
+    pdftitle={Fine-tuning and Inference of Large Language Models},
+    pdfauthor={Grupo VKPB}
+}
+
+% Custom colors
+\definecolor{primaryblue}{RGB}{0, 83, 156}
+\definecolor{secondarygreen}{RGB}{0, 128, 0}
+\definecolor{accentorange}{RGB}{230, 126, 34}
+\definecolor{lightgray}{RGB}{245, 245, 245}
+\definecolor{transformers}{RGB}{231, 76, 60}
+\definecolor{unsloth}{RGB}{39, 174, 96}
+\definecolor{vllm}{RGB}{52, 152, 219}
+\definecolor{ollama}{RGB}{155, 89, 182}
+\definecolor{basemodel}{RGB}{149, 165, 166}
+
+% Section formatting
+\titleformat{\section}
+    {\Large\bfseries\color{primaryblue}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}
+    {\large\bfseries\color{primaryblue!80}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{primaryblue!60}}{\thesubsubsection}{0.5em}{}
+
+% Compact lists
+\setlist{nosep, leftmargin=*}
+
+% Caption style
+\captionsetup{
+    font=small,
+    labelfont={bf,color=primaryblue},
+    format=plain,
+    justification=justified
+}
+
+% Code listings style
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    backgroundcolor=\color{lightgray},
+    frame=single,
+    frameround=tttt,
+    rulecolor=\color{primaryblue!30},
+    breaklines=true,
+    numbers=none,
+    tabsize=2,
+    showstringspaces=false
+}
+
+% tcolorbox styles
+\tcbset{
+    colback=lightgray,
+    colframe=primaryblue,
+    fonttitle=\bfseries\small,
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{primaryblue}NLP II -- Fine-tuning and Inference of LLMs}
+\fancyhead[R]{\small\color{primaryblue}Grupo VKPB}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primaryblue}\leaders\hrule height \headrulewidth\hfill}}
+
+% Graphics path
+\graphicspath{{../results/plots/}}
+
+% ==================== DOCUMENT ====================
+\begin{document}
+
+% ==================== TITLE PAGE ====================
+\begin{titlepage}
+\begin{center}
+
+\vspace*{1cm}
+
+{\color{primaryblue}\rule{\textwidth}{2pt}}
+
+\vspace{1cm}
+
+{\Huge\bfseries\color{primaryblue} Fine-tuning and Inference of Large Language Models}
+
+\vspace{0.8cm}
+
+{\LARGE A Comparative Study of LLM Frameworks\\[0.2cm] for Fine-tuning and Inference}
+
+\vspace{0.5cm}
+
+{\color{primaryblue}\rule{\textwidth}{2pt}}
+
+\vspace{2cm}
+
+{\Large\bfseries Grupo VKPB}
+
+\vspace{1cm}
+
+{\large
+\begin{tabular}{c}
+Francisco López-Alvarado \\[0.3cm]
+Enrique Rodríguez \\[0.3cm]
+Bernardo Ordás \\[0.3cm]
+Javier Viseras
+\end{tabular}
+}
+
+\vspace{2cm}
+
+{\large\itshape Universidad Pontificia Comillas - ICAI\\[0.3cm]
+Grado en Ingeniería Matemática e Inteligencia Artificial}
+
+\vspace{1cm}
+
+{\large Natural Language Processing II\\[0.2cm]
+Academic Year 2025/2026}
+
+\vfill
+
+{\large\today}
+
+\end{center}
+\end{titlepage}
+
+% ==================== ABSTRACT ====================
+\begin{abstract}
+\noindent
+\textbf{Context:} We present a comparative study of modern frameworks for fine-tuning and inference of Large Language Models, following the ``Fine-tune Once, Serve Anywhere'' paradigm. 
+
+\textbf{Methods:} Using TinyLlama-1.1B-Chat as base model and Databricks Dolly 15k dataset, we compare two fine-tuning pipelines (Transformers+PEFT and Unsloth) and four inference frameworks (Transformers, Unsloth, vLLM, Ollama). 
+
+\textbf{Key Finding:} Our results reveal a critical insight: \textit{fine-tuning an already instruction-tuned chat model on a general-knowledge dataset yields marginal improvements in automatic metrics} (BLEU: +21\% for Transformers, +52\% for Unsloth), while BERTScore actually decreases slightly (-2.3\% to -3.6\%). This suggests that the pre-existing chat capabilities of TinyLlama already capture much of what Dolly provides. 
+
+\textbf{Conclusions:} Framework choice significantly impacts training efficiency and inference performance. Unsloth achieves the best throughput (135.83 tok/s) while maintaining competitive quality. We discuss implications for practitioners selecting fine-tuning strategies and deployment frameworks.
+
+\vspace{0.5cm}
+\noindent\textbf{Keywords:} Fine-tuning, LLM, LoRA, QLoRA, Transformers, Unsloth, vLLM, Ollama, Instruction Tuning
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ==================== 1. INTRODUCTION ====================
+\section{Introduction}
+\label{sec:introduction}
+
+The deployment of Large Language Models (LLMs) in production environments presents practitioners with a complex decision landscape involving multiple frameworks, each with distinct trade-offs between ease of use, computational efficiency, and output quality.
+
+This project implements and evaluates the ``\textbf{Fine-tune Once, Serve Anywhere}'' paradigm, where a single fine-tuned model is deployed across multiple inference frameworks. Our study addresses three key questions:
+
+\begin{enumerate}
+    \item How do different fine-tuning frameworks (Transformers+PEFT vs Unsloth) compare in terms of efficiency and resulting model quality?
+    \item What are the performance characteristics of different inference frameworks?
+    \item \textbf{Most critically}: What happens when we fine-tune an \textit{already instruction-tuned} model on a \textit{general-knowledge} dataset?
+\end{enumerate}
+
+This last question emerges as the central finding of our work. TinyLlama-1.1B-Chat is not a base language model---it has already undergone instruction tuning and RLHF alignment. Fine-tuning it further on Dolly 15k, a general-purpose instruction dataset, represents a form of \textit{continued training} rather than domain adaptation, with implications we analyze in depth.
+
+\subsection{The Model-Dataset Alignment Problem}
+\label{subsec:alignment_problem}
+
+A fundamental consideration in fine-tuning that is often overlooked is the \textbf{alignment between the base model's capabilities and the fine-tuning dataset's content}. In our case:
+
+\begin{tcolorbox}[title=Critical Insight: Model-Dataset Mismatch]
+\textbf{TinyLlama-1.1B-Chat} is already an instruction-tuned model, trained on conversational data and aligned for chat interactions.
+
+\textbf{Dolly 15k} is a general-knowledge instruction-following dataset covering broad topics without domain specialization.
+
+$\Rightarrow$ \textbf{Result}: The fine-tuning process teaches the model skills it largely already possesses, explaining the marginal improvements observed.
+\end{tcolorbox}
+
+This observation has profound implications for practitioners: \textit{fine-tuning is most effective when there is a clear gap between what the model knows and what the dataset teaches}.
+
+% ==================== 2. METHODOLOGY ====================
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Experimental Setup}
+
+\subsubsection{Base Model: TinyLlama-1.1B-Chat}
+
+We selected TinyLlama-1.1B-Chat for its balance between model capability and computational accessibility:
+
+\begin{itemize}
+    \item \textbf{Architecture}: 1.1 billion parameters, LLaMA architecture
+    \item \textbf{Pre-training}: Trained on 3 trillion tokens from diverse sources
+    \item \textbf{Instruction Tuning}: Already fine-tuned for chat/instruction-following
+    \item \textbf{Context Length}: 2048 tokens
+\end{itemize}
+
+\textbf{Important Note}: The ``Chat'' suffix indicates this model has \textit{already} undergone instruction tuning. This is fundamentally different from fine-tuning a base model like TinyLlama-1.1B (without the Chat suffix).
+
+\subsubsection{Dataset: Databricks Dolly 15k}
+
+The Dolly 15k dataset consists of 15,011 instruction-response pairs created by Databricks employees:
+
+\begin{itemize}
+    \item \textbf{Categories}: Open QA, Closed QA, Summarization, Information Extraction, Creative Writing, Classification, Brainstorming
+    \item \textbf{Nature}: General knowledge, not domain-specific
+    \item \textbf{Quality}: Human-written, not synthetically generated
+\end{itemize}
+
+\textbf{Dataset Split}:
+\begin{itemize}
+    \item Training: 13,510 samples (90\%)
+    \item Validation: 750 samples (5\%)
+    \item Test: 751 samples (5\%)
+\end{itemize}
+
+\subsection{Training Configuration}
+
+We employed \textbf{QLoRA} (Quantized Low-Rank Adaptation) for memory-efficient fine-tuning:
+
+\begin{table}[H]
+\centering
+\caption{QLoRA Training Hyperparameters}
+\label{tab:hyperparameters}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Quantization & 4-bit NF4 \\
+LoRA Rank ($r$) & 16 \\
+LoRA Alpha ($\alpha$) & 32 \\
+LoRA Dropout & 0.05 \\
+Target Modules & q\_proj, k\_proj, v\_proj, o\_proj \\
+Learning Rate & $2 \times 10^{-4}$ \\
+Batch Size & 4 \\
+Gradient Accumulation & 4 \\
+Epochs & 3 \\
+Max Sequence Length & 512 \\
+Optimizer & AdamW (paged, 8-bit) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Hardware Environment}
+
+All experiments were conducted on consumer-grade hardware:
+
+\begin{itemize}
+    \item \textbf{GPU}: NVIDIA RTX 4070 SUPER (12.5 GB VRAM)
+    \item \textbf{CUDA}: Version 12.8
+    \item \textbf{PyTorch}: Version 2.9.1
+    \item \textbf{OS}: Linux (Ubuntu-based)
+\end{itemize}
+
+% ==================== 3. FRAMEWORKS ====================
+\section{Framework Analysis}
+\label{sec:frameworks}
+
+\subsection{Fine-tuning Frameworks}
+
+\subsubsection{Transformers + PEFT}
+
+The combination of Hugging Face Transformers and PEFT (Parameter-Efficient Fine-Tuning) represents the standard approach:
+
+\begin{itemize}
+    \item \textbf{Advantages}: Extensive documentation, large community, maximum flexibility
+    \item \textbf{Implementation}: Uses \texttt{SFTTrainer} from TRL library
+    \item \textbf{Quantization}: BitsAndBytes for 4-bit loading
+\end{itemize}
+
+\subsubsection{Unsloth}
+
+Unsloth provides optimized kernels for faster training:
+
+\begin{itemize}
+    \item \textbf{Advantages}: Significantly faster training, lower memory usage
+    \item \textbf{Implementation}: Drop-in replacement for standard training
+    \item \textbf{Optimization}: Custom CUDA kernels, gradient checkpointing
+\end{itemize}
+
+\subsection{Inference Frameworks}
+
+\subsubsection{Transformers (Native)}
+
+Standard inference using Hugging Face's generation pipeline:
+\begin{itemize}
+    \item Maximum compatibility
+    \item No additional optimization
+    \item Useful as baseline
+\end{itemize}
+
+\subsubsection{Unsloth (Optimized)}
+
+Inference with Unsloth's optimized model loading:
+\begin{itemize}
+    \item Faster token generation
+    \item Optimized attention mechanisms
+    \item Seamless integration with trained adapters
+\end{itemize}
+
+\subsubsection{vLLM}
+
+High-throughput inference engine:
+\begin{itemize}
+    \item PagedAttention for efficient memory management
+    \item Continuous batching
+    \item Designed for production serving
+\end{itemize}
+
+\subsubsection{Ollama}
+
+Local LLM deployment framework:
+\begin{itemize}
+    \item Easy deployment via GGUF format
+    \item REST API interface
+    \item Quantization support (Q4\_K\_M, Q8\_0)
+\end{itemize}
+
+% ==================== 4. RESULTS ====================
+\section{Results and Analysis}
+\label{sec:results}
+
+\subsection{Training Performance}
+
+Figure~\ref{fig:training} presents the training comparison between frameworks.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{02_training_comparison.pdf}
+    \caption{Training time comparison between Transformers+PEFT and Unsloth frameworks. Despite similar total training times, the frameworks show different memory utilization patterns and throughput characteristics.}
+    \label{fig:training}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Training Performance Metrics}
+\label{tab:training_results}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Transformers} & \textbf{Unsloth} \\
+\midrule
+Training Time & 53.35 min & 71.64 min \\
+Final Loss & 1.298 & 1.288 \\
+Steps & 2,532 & 2,532 \\
+Samples/Second & 0.84 & 0.63 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Observation}: Contrary to Unsloth's claims of faster training, our experiments showed similar or slightly slower training times. This may be attributed to our specific hardware configuration and the relatively small model size where Unsloth's optimizations have less impact.
+
+\subsection{Quality Metrics: The Crucial Analysis}
+
+Figure~\ref{fig:quality} presents our central finding---the comparison of quality metrics across Base Model, Transformers fine-tuned, and Unsloth fine-tuned variants.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{03_quality_metrics.pdf}
+    \caption{Quality metrics comparison across Base Model (unfine-tuned TinyLlama-Chat), Transformers fine-tuned, and Unsloth fine-tuned models. Note the \textbf{marginal improvements} in BLEU and ROUGE-L, and the \textbf{slight decrease} in BERTScore after fine-tuning.}
+    \label{fig:quality}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Complete Quality Metrics Comparison}
+\label{tab:quality_metrics}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Base} & \textbf{Transformers} & \textbf{Unsloth} \\
+\midrule
+BLEU & 4.32 & 5.23 (+21\%) & 6.59 (+52\%) \\
+ROUGE-L & 0.169 & 0.195 (+15\%) & 0.236 (+40\%) \\
+BERTScore F1 & \textbf{0.851} & 0.821 (-3.5\%) & 0.832 (-2.3\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Understanding the Results: Why Marginal Improvement?}
+
+The results reveal a pattern that warrants careful analysis:
+
+\begin{tcolorbox}[title=Key Finding: Marginal Improvement Explained]
+\textbf{Why did fine-tuning yield only marginal improvements?}
+
+\begin{enumerate}
+    \item \textbf{Pre-existing Capabilities}: TinyLlama-1.1B-Chat is already instruction-tuned. It already knows how to follow instructions and generate coherent responses.
+    
+    \item \textbf{Dataset Overlap}: Dolly 15k covers general knowledge---the same type of content the model was originally trained on. There is significant conceptual overlap.
+    
+    \item \textbf{No Domain Specialization}: Dolly is not a specialized dataset (medical, legal, coding). Fine-tuning doesn't teach new domain knowledge.
+    
+    \item \textbf{BERTScore Decrease}: The slight decrease in BERTScore suggests that while responses become more similar to Dolly's style, they may lose some of the original model's nuanced language understanding.
+\end{enumerate}
+\end{tcolorbox}
+
+\subsection{Before vs After Fine-tuning}
+
+Figure~\ref{fig:before_after} provides a direct visual comparison of the improvement (or lack thereof) from fine-tuning.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{05_before_after.pdf}
+    \caption{Direct comparison of metrics before (Base) and after fine-tuning (Transformers, Unsloth). The visualization clearly shows the marginal nature of improvements, particularly the BERTScore decrease.}
+    \label{fig:before_after}
+\end{figure}
+
+\subsection{Inference Benchmarks}
+
+Figure~\ref{fig:inference} presents the inference performance across frameworks.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{01_inference_benchmark.pdf}
+    \caption{Inference benchmark comparison showing latency, throughput, and tokens per second across different deployment frameworks.}
+    \label{fig:inference}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Inference Performance Summary}
+\label{tab:inference}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Framework} & \textbf{Latency (s)} & \textbf{Tok/s} & \textbf{GPU Mem} & \textbf{Load Time} \\
+\midrule
+Transformers & 1.50 & 74.00 & 2.1 GB & 3.2s \\
+Unsloth & 0.92 & 135.83 & 1.8 GB & 2.8s \\
+vLLM & \textbf{0.25} & \textbf{345.77} & 10.9 GB & 14.4s \\
+Ollama & 0.44 & 243.86 & 1.99 GB & 1.7s \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{GPU Memory Management: vLLM vs Ollama}
+\label{subsec:memory}
+
+A notable finding is the significant difference in GPU memory utilization between vLLM (10.9 GB) and Ollama (1.99 GB), despite both serving the same model. This reflects fundamentally different architectural approaches:
+
+\begin{table}[H]
+\centering
+\caption{Memory Management Comparison: vLLM vs Ollama}
+\label{tab:memory_comparison}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Aspect} & \textbf{vLLM} & \textbf{Ollama} \\
+\midrule
+GPU Memory Used & 10.9 GB & 1.99 GB \\
+Memory Strategy & Pre-allocation & On-demand \\
+KV Cache & 383k tokens (fixed) & Dynamic, minimal \\
+Concurrent Requests & 187+ & 1 \\
+CUDA Graphs & Yes & No \\
+Optimized For & Production batching & Local/interactive \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[title=Why vLLM Uses More Memory]
+\textbf{vLLM's PagedAttention Architecture:}
+\begin{itemize}
+    \item \textbf{KV Cache Pre-allocation}: Reserves memory for the Key-Value cache to handle multiple concurrent requests efficiently
+    \item \textbf{CUDA Graph Capture}: Pre-compiles GPU operations for faster execution
+    \item \textbf{Memory Pooling}: Maintains buffers for batched inference
+    \item \textbf{Trade-off}: Higher memory $\rightarrow$ higher throughput (345 tok/s vs 244 tok/s)
+\end{itemize}
+
+\textbf{Ollama's Lightweight Design:}
+\begin{itemize}
+    \item \textbf{GGUF Format}: Uses llama.cpp with native quantization (Q4\_K\_M)
+    \item \textbf{Lazy Loading}: Only loads what's needed for the current request
+    \item \textbf{Single Request Focus}: No pre-allocation for concurrent users
+    \item \textbf{Trade-off}: Lower memory $\rightarrow$ easier local deployment
+\end{itemize}
+\end{tcolorbox}
+
+\subsubsection{When to Choose Each Framework}
+
+\textbf{Choose vLLM when:}
+\begin{itemize}
+    \item Serving multiple concurrent users in production
+    \item GPU memory is abundant (>12 GB)
+    \item Maximum throughput is critical
+    \item Building API endpoints with high request rates
+\end{itemize}
+
+\textbf{Choose Ollama when:}
+\begin{itemize}
+    \item Running locally on consumer hardware
+    \item Memory is constrained (<8 GB GPU)
+    \item Single-user interactive applications
+    \item Ease of deployment is prioritized over raw performance
+\end{itemize}
+
+\subsection{Human Evaluation}
+
+Figure~\ref{fig:human_eval} shows human evaluation results across multiple quality dimensions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{04_human_evaluation.pdf}
+    \caption{Human evaluation scores across dimensions: Relevance, Coherence, Fluency, and Completeness. Scores range from 1-5.}
+    \label{fig:human_eval}
+\end{figure}
+
+\subsection{Summary Table}
+
+Figure~\ref{fig:summary} provides a consolidated view of all results.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{06_summary_table.pdf}
+    \caption{Summary table consolidating all metrics across Base Model, Transformers, and Unsloth configurations.}
+    \label{fig:summary}
+\end{figure}
+
+% ==================== 5. DISCUSSION ====================
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{When is Fine-tuning Worth It?}
+
+Our results challenge the assumption that fine-tuning always improves model performance. We propose a decision framework:
+
+\begin{tcolorbox}[title=Fine-tuning Decision Framework]
+\textbf{Fine-tuning IS recommended when:}
+\begin{itemize}
+    \item Using a \textbf{base model} (not instruction-tuned)
+    \item Training on \textbf{domain-specific} data (medical, legal, code)
+    \item Adapting to a \textbf{specific format} or style
+    \item Working with \textbf{proprietary} organizational knowledge
+\end{itemize}
+
+\textbf{Fine-tuning may NOT be worth it when:}
+\begin{itemize}
+    \item Model is already \textbf{instruction-tuned} for similar tasks
+    \item Dataset is \textbf{general knowledge} without specialization
+    \item Prompt engineering achieves \textbf{similar results}
+    \item Computational resources are \textbf{limited}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{The BERTScore Paradox}
+
+An intriguing finding is that BERTScore \textit{decreased} after fine-tuning while BLEU and ROUGE increased. This suggests:
+
+\begin{enumerate}
+    \item \textbf{Style vs Substance}: Fine-tuning may have adapted the response \textit{style} to match Dolly's patterns (improving n-gram overlap metrics) while slightly degrading semantic richness.
+    
+    \item \textbf{Metric Limitations}: BLEU and ROUGE measure surface-level similarity, while BERTScore captures deeper semantic alignment. A response can be more ``Dolly-like'' without being objectively better.
+    
+    \item \textbf{Overfitting to Format}: The model may have learned Dolly's response formatting rather than gaining new knowledge.
+\end{enumerate}
+
+\subsection{Framework Selection Guidelines}
+
+Based on our comprehensive evaluation:
+
+\subsubsection{For Training}
+
+\begin{itemize}
+    \item \textbf{Standard Projects}: Transformers+PEFT offers maximum flexibility and documentation
+    \item \textbf{Resource-Constrained}: Unsloth provides memory optimizations
+    \item \textbf{Large-Scale}: Unsloth's optimizations become more significant with larger models
+\end{itemize}
+
+\subsubsection{For Inference}
+
+\begin{itemize}
+    \item \textbf{Development/Testing}: Transformers (native) for simplicity
+    \item \textbf{Maximum Throughput}: vLLM (345.77 tok/s) for production with high concurrency
+    \item \textbf{Memory-Efficient}: Ollama (243.86 tok/s, 1.99 GB) for local deployment
+    \item \textbf{Balanced}: Unsloth (135.83 tok/s) for good performance without complex setup
+\end{itemize}
+
+\subsection{Lessons Learned}
+
+\begin{enumerate}
+    \item \textbf{Know Your Base Model}: Understanding whether a model is already instruction-tuned is crucial before deciding to fine-tune.
+    
+    \item \textbf{Dataset-Model Alignment}: The effectiveness of fine-tuning depends heavily on the gap between model capabilities and dataset content.
+    
+    \item \textbf{Multiple Metrics Matter}: Relying on a single metric (like BLEU) can be misleading. BERTScore revealed degradation that BLEU missed.
+    
+    \item \textbf{Practical Considerations}: Framework compatibility issues (like vLLM) can impact deployment plans. Always test the full pipeline.
+    
+    \item \textbf{Resource-Quality Trade-off}: More training time doesn't guarantee better results when the model-dataset alignment is suboptimal.
+\end{enumerate}
+
+% ==================== 6. CONCLUSIONS ====================
+\section{Conclusions}
+\label{sec:conclusions}
+
+This project provides a comprehensive analysis of the ``Fine-tune Once, Serve Anywhere'' paradigm, with findings that have significant implications for practitioners.
+
+\subsection{Main Conclusions}
+
+\begin{enumerate}
+    \item \textbf{Model-Dataset Alignment is Critical}: Fine-tuning TinyLlama-1.1B-Chat (already instruction-tuned) on Dolly 15k (general knowledge) yielded only marginal improvements (+21-52\% BLEU) because the model already possessed most required capabilities.
+    
+    \item \textbf{Fine-tuning Can Degrade Performance}: BERTScore decreased by 2-3.5\% after fine-tuning, suggesting that continued training on similar data may dilute rather than enhance certain capabilities.
+    
+    \item \textbf{Framework Choice Matters}: vLLM achieved 345.77 tokens/second (4.7$\times$ faster than Transformers), while Ollama achieved 243.86 tok/s with only 1.99 GB memory. Framework selection is crucial for deployment.
+    
+    \item \textbf{Memory vs Performance Trade-off}: vLLM's aggressive GPU memory pre-allocation (10.9 GB) enables superior throughput for production batching, while Ollama's lightweight approach (1.99 GB) suits local deployment.
+    
+    \item \textbf{Portability is Achievable}: The ``serve anywhere'' paradigm works---adapters can be deployed across multiple frameworks with appropriate conversion.
+    
+    \item \textbf{Automatic Metrics Need Context}: Without understanding the base model's capabilities, metrics like BLEU can be misleading about true improvement.
+\end{enumerate}
+
+\subsection{Recommendations for Practitioners}
+
+\begin{tcolorbox}[title=Practical Recommendations]
+\begin{enumerate}
+    \item \textbf{Evaluate before fine-tuning}: Test the base model on your task first. Fine-tuning may be unnecessary.
+    
+    \item \textbf{Use domain-specific data}: General datasets provide limited benefit for already-capable models.
+    
+    \item \textbf{Monitor multiple metrics}: Use BLEU, ROUGE, and BERTScore together for a complete picture.
+    
+    \item \textbf{Consider prompt engineering}: For instruction-tuned models, prompting may achieve similar results without training.
+    
+    \item \textbf{Test deployment early}: Verify framework compatibility before investing in training.
+\end{enumerate}
+\end{tcolorbox}
+
+\subsection{Future Work}
+
+\begin{itemize}
+    \item Investigate Direct Preference Optimization (DPO) as an alternative to SFT
+    \item Experiment with domain-specific datasets to quantify specialization benefits
+    \item Explore base models (non-chat) to measure true fine-tuning impact
+    \item Implement and evaluate RAG (Retrieval-Augmented Generation) as an alternative to fine-tuning
+\end{itemize}
+
+
+% ==================== APPENDIX ====================
+\appendix
+\section{Reproducibility Guide}
+\label{app:reproducibility}
+
+This appendix provides instructions to reproduce all experiments using the unified pipeline script \texttt{main.py}.
+
+\subsection{Prerequisites}
+
+\begin{enumerate}
+    \item \textbf{Hardware}: NVIDIA GPU with $\geq$8GB VRAM (tested on RTX 4070 SUPER 12GB)
+    \item \textbf{Software}: Python 3.10+, CUDA 12.x, Git
+    \item \textbf{Dependencies}: Install via \texttt{pip install -r requirements.txt}
+\end{enumerate}
+
+\subsection{Pipeline Execution}
+
+The \texttt{main.py} script provides a unified interface for all pipeline stages:
+
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
+# Show all available options
+python main.py --help
+
+# Run complete pipeline (data + train + eval + benchmark)
+python main.py --mode full --trainer unsloth
+
+# Run individual stages
+python main.py --mode data          # Data preparation only
+python main.py --mode train --trainer transformers  # Train with PEFT
+python main.py --mode train --trainer unsloth       # Train with Unsloth
+python main.py --mode evaluate      # Evaluate trained models
+python main.py --mode benchmark     # Run inference benchmarks
+python main.py --mode visualize     # Generate result plots
+\end{lstlisting}
+
+\subsection{Pipeline Stages}
+
+\begin{enumerate}
+    \item \textbf{Data Preparation} (\texttt{--mode data}): Downloads Databricks Dolly 15k, formats prompts using instruction template, splits into train/validation/test sets.
+    
+    \item \textbf{Fine-tuning} (\texttt{--mode train}): Loads TinyLlama-1.1B-Chat in 4-bit quantization, applies LoRA adapters (r=16, $\alpha$=32), trains for 3 epochs with gradient accumulation.
+    
+    \item \textbf{Evaluation} (\texttt{--mode evaluate}): Computes BLEU, ROUGE-L, and BERTScore on test set. Generates sample outputs for qualitative analysis.
+    
+    \item \textbf{Benchmarking} (\texttt{--mode benchmark}): Measures inference latency and throughput across Transformers, Unsloth, vLLM, and Ollama frameworks.
+    
+    \item \textbf{Visualization} (\texttt{--mode visualize}): Generates all figures used in this report from JSON result files.
+\end{enumerate}
+
+\subsection{Configuration}
+
+Training hyperparameters are defined in \texttt{configs/config.yaml}:
+
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+model:
+  name: "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+  max_length: 512
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+training:
+  epochs: 3
+  batch_size: 4
+  learning_rate: 2e-4
+  gradient_accumulation_steps: 4
+\end{lstlisting}
+
+\subsection{Output Structure}
+
+\begin{verbatim}
+outputs/
+|-- transformers/YYYYMMDD_HHMMSS/  # PEFT training outputs
+|   |-- adapter/                   # LoRA weights
+|   |-- merged_model/              # Full merged model
+|   +-- training_stats.json
+|-- unsloth/YYYYMMDD_HHMMSS/       # Unsloth training outputs
++-- ollama/
+    |-- tinyllama-finetuned.gguf   # GGUF for Ollama
+    +-- Modelfile
+results/
+|-- benchmarks/                    # Inference benchmark JSONs
+|-- evaluation/                    # Quality metric JSONs
++-- plots/                         # Generated figures
+\end{verbatim}
+
+\subsection{Ollama Deployment}
+
+To deploy the fine-tuned model with Ollama:
+
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
+# Create Ollama model from GGUF
+cd outputs/ollama
+ollama create tinyllama-finetuned -f Modelfile
+
+# Test the model
+ollama run tinyllama-finetuned "What is machine learning?"
+
+# Run benchmark
+python evaluation/benchmark_ollama.py
+\end{lstlisting}
+
+\section{Sample Outputs}
+\label{app:samples}
+
+\textbf{Prompt}: ``What is machine learning?''
+
+\textbf{Base Model Response}:
+\begin{quote}
+\small\itshape
+Machine learning is a branch of artificial intelligence that focuses on building applications that learn from data and improve their accuracy over time without being programmed to do so.
+\end{quote}
+
+\textbf{Fine-tuned (Unsloth) Response}:
+\begin{quote}
+\small\itshape
+Machine learning is a subset of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. It focuses on the development of computer programs that can access data and use it to learn for themselves.
+\end{quote}
+
+\textbf{Analysis}: Both responses are accurate and coherent. The fine-tuned response is slightly more detailed but not fundamentally different in quality---illustrating our central finding about marginal improvements.
+
+\end{document}

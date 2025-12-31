@@ -1,0 +1,52 @@
+[
+  {
+    "prompt": "### Instruction:\nName 5 possible fuel sources for a futuristic spaceship\n\n### Response:\n",
+    "reference": "Ion fusion, hyper drive, flux capacitator, solar sails, alien venom",
+    "generated": "- Steam\n- Fuel\n- Electricity\n- Gases\n- Oil"
+  },
+  {
+    "prompt": "### Instruction:\nWho won the March Madness Mens Basketball Tournament in 2022?\n\n### Response:\n",
+    "reference": "The University Kansas Jayhawks",
+    "generated": "No, the 2022 March Madness Men's Basketball Tournament was won by the Gonzaga Bulldogs."
+  },
+  {
+    "prompt": "### Instruction:\nWhat are some ways that I can reduce the latency of my API?\n\n### Response:\n",
+    "reference": "To reduce the latency of your API, you could consider caching any database operations you may have, reducing the number of network requests required, or scaling up the number of instances of your serv",
+    "generated": "- 1. Use the caching API to store the data in the database and return it instead of fetching it from the API"
+  },
+  {
+    "prompt": "### Instruction:\nExtract all of the dates mentioned in this paragraph and list them using bullets in the format {Date} - {Description}\n\n### Context:\nThe Carolina Biological Supply Company was founded ",
+    "reference": "\u2022 1927 - This is when the Carolina Biological Supply Company was founded.\n\u2022 1920s - During this time period science teachers had to collect most of the materials they used in their classes and laborat",
+    "generated": "In the 1920s, it was difficult for science teachers to collect all the materials they needed for their classes and laboratories."
+  },
+  {
+    "prompt": "### Instruction:\nWhich ones of the following are considered nutrient-dense foods: soda, vegetables, fruits, chips, whole grains, seafood, cookies, eggs, beans, peas, lentils, unsalted nuts and seeds, ",
+    "reference": "Vegetables, fruits, whole grains, seafood, eggs, beans, peas, and lentils, unsalted nuts and seeds, fat-free and low-fat dairy products, and lean meats and poultry are nutrient-dense foods.",
+    "generated": "Soda, vegetables, fruits, chips, whole grains, seafood, cookies, eggs, beans, peas, lentils, unsalted nuts and seeds, fat-free and low-fat dairy products, fried chicken, lean meats and poultry are nut"
+  },
+  {
+    "prompt": "### Instruction:\nHow long is an Ironman triathlon?\n\n### Response:\n",
+    "reference": "An Ironman triathlon is 140.6 miles long. This is considered an endurance event, and frequently takes competitors over 10 hours to complete. The triathlon consists of 3 events: swimming, biking, and r",
+    "generated": "An Ironman triathlon is 2.4 miles in swimming, 112 miles on a bike and 26.2 miles on foot."
+  },
+  {
+    "prompt": "### Instruction:\nHow much did Shaffer donate?\n\n### Context:\nIn 2018, Butler County Community College created The Shaffer School of Nursing and Allied Health after Shaffer donated $1 million to the sch",
+    "reference": "$1 million",
+    "generated": "I do not have access to the latest information. However, I do have access to the latest information about the Shaffer School of Nursing and Allied Health. The Shaffer School of Nursing and Allied Heal"
+  },
+  {
+    "prompt": "### Instruction:\nPlease provide me with ideas for dinner tonight.\n\n### Response:\n",
+    "reference": "Sure! Here are 2 ideas. \n\n1) Ordering in:\n\nYou can see what restaurants in your area offer home delivery, and select something that works well for you! Some common things to order are Pizza, Sushi, Ta",
+    "generated": "Tonight's dinner is grilled chicken. It's a low-carb option and is very easy to prepare.\n\nIt's important to grill the chicken to ensure it's fully cooked through. Check the internal temperature of the"
+  },
+  {
+    "prompt": "### Instruction:\nhow to give a great presentation\n\n### Response:\n",
+    "reference": "Giving a great presentation requires a combination of effective planning, engaging delivery, and thoughtful audience engagement. Here are some tips to help you create and deliver a successful presenta",
+    "generated": "Sure! I\u2019ve always loved presentations. It\u2019s a great way to communicate complex ideas and make connections that might be difficult to make otherwise. In my presentation, I\u2019ll share some of the ideas I\u2019"
+  },
+  {
+    "prompt": "### Instruction:\nWhere are good places for a family to visit in Portland Oregon?\n\n### Response:\n",
+    "reference": "1. The Oregon Museum of Science and Industry (OMSI) is a science and technology museum in Portland Oregon. The museum has many interactive exhibits, a theatre and a decommissioned naval submarine. \n\n2",
+    "generated": "Portland has a lot of great places to visit. You can go to the beach, visit a museum, go for a hike, and visit a coffee shop. There are also a lot of great restaurants. There are some great outdoor ac"
+  }
+]

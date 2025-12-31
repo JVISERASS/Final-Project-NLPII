@@ -1,0 +1,19 @@
+{
+  "framework": "vllm",
+  "timestamp": "2025-12-31T12:09:27.090275",
+  "model_path": "outputs/transformers/20251227_134936/merged_model",
+  "config": {
+    "num_prompts": 15,
+    "num_trials": 3,
+    "max_new_tokens": 100
+  },
+  "results": {
+    "avg_latency_s": 0.24595698250664605,
+    "std_latency_s": 0.06740689006338577,
+    "avg_tokens_generated": 85.64444444444445,
+    "avg_throughput_tokens_per_s": 345.7715055963317,
+    "std_throughput": 10.322701828196585,
+    "peak_memory_gb": 10.9033203125,
+    "load_time_s": 14.411469221115112
+  }
+}

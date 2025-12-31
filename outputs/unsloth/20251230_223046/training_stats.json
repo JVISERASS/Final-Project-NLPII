@@ -1,0 +1,14 @@
+{
+  "framework": "unsloth",
+  "training_time_seconds": 2601.3055551052094,
+  "training_time_minutes": 43.35509258508682,
+  "peak_memory_gb": 1.1978192329406738,
+  "train_loss": 1.36722336324056,
+  "eval_loss": 2.8126771450042725,
+  "train_samples": 12000,
+  "epochs": 3,
+  "effective_batch_size": 16,
+  "lora_rank": 16,
+  "learning_rate": 0.0002,
+  "timestamp": "2025-12-30T23:14:54.842232"
+}

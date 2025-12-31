@@ -1,0 +1,19 @@
+{
+  "framework": "ollama",
+  "timestamp": "2025-12-31T12:07:02.936513",
+  "model_name": "tinyllama-finetuned",
+  "config": {
+    "num_prompts": 15,
+    "num_trials": 3,
+    "max_new_tokens": 100
+  },
+  "results": {
+    "avg_latency_s": 0.44017756250169543,
+    "std_latency_s": 0.21704649634984655,
+    "avg_tokens_generated": 93.11111111111111,
+    "avg_throughput_tokens_per_s": 243.86077661576795,
+    "std_throughput": 78.42793941921938,
+    "peak_memory_gb": 1.9921875,
+    "load_time_s": 1.7020509243011475
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "project": "Fine-tune Once, Serve Anywhere: Transformers, Unsloth, vLLM & Ollama",
+  "timestamp": "2025-12-27T18:00:00",
+  "status": "COMPLETE",
+  
+  "dataset": {
+    "name": "Databricks Dolly 15k",
+    "train_samples": 12000,
+    "val_samples": 2000,
+    "test_samples": 1000
+  },
+  
+  "model": {
+    "base": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "parameters": "1.1B",
+    "quantization": "4-bit NF4 (QLoRA)"
+  },
+  
+  "fine_tuning": {
+    "transformers_peft": {
+      "framework": "Transformers + PEFT",
+      "training_time_min": 64.66,
+      "eval_loss": 1.3518,
+      "peak_memory_gb": 2.48,
+      "trainable_params": "4.5M (0.73%)",
+      "lora_rank": 16,
+      "lora_alpha": 32,
+      "epochs": 3,
+      "output_path": "outputs/transformers/20251227_134936/merged_model"
+    },
+    "unsloth": {
+      "framework": "Unsloth",
+      "training_time_min": 71.64,
+      "eval_loss": 1.3612,
+      "peak_memory_gb": 2.90,
+      "trainable_params": "4.5M (0.73%)",
+      "lora_rank": 16,
+      "lora_alpha": 32,
+      "epochs": 3,
+      "output_path": "outputs/unsloth/20251227_160819/merged_model"
+    }
+  },
+  
+  "evaluation": {
+    "automatic_metrics": {
+      "transformers": {
+        "bleu": 5.96,
+        "bleu_1": 21.25,
+        "bleu_2": 12.27,
+        "rouge_1": 0.283,
+        "rouge_2": 0.101,
+        "rouge_l": 0.210
+      },
+      "unsloth": {
+        "bleu": 8.19,
+        "bleu_1": 24.02,
+        "bleu_2": 14.50,
+        "rouge_1": 0.311,
+        "rouge_2": 0.111,
+        "rouge_l": 0.249
+      }
+    },
+    "before_after_comparison": {
+      "base_model_bleu": 8.24,
+      "base_model_rouge_l": 0.223,
+      "finetuned_transformers_bleu": 8.83,
+      "finetuned_transformers_rouge_l": 0.267,
+      "finetuned_unsloth_bleu": 6.30,
+      "finetuned_unsloth_rouge_l": 0.230
+    },
+    "human_evaluation": {
+      "scale": "1-5 (1=Very Poor, 5=Excellent)",
+      "samples": 5,
+      "transformers": {
+        "avg_helpfulness": 2.8,
+        "avg_factuality": 2.4,
+        "avg_instruction_following": 3.4,
+        "overall_avg": 2.87
+      },
+      "unsloth": {
+        "avg_helpfulness": 2.8,
+        "avg_factuality": 2.6,
+        "avg_instruction_following": 3.4,
+        "overall_avg": 2.93
+      }
+    }
+  },
+  
+  "inference_benchmarks": {
+    "transformers": {
+      "avg_latency_s": 1.028,
+      "throughput_tokens_per_s": 86.57,
+      "peak_memory_gb": 1.03,
+      "speedup": "1x (baseline)"
+    },
+    "unsloth": {
+      "avg_latency_s": 0.671,
+      "throughput_tokens_per_s": 142.01,
+      "peak_memory_gb": 2.06,
+      "speedup": "1.64x"
+    },
+    "vllm": {
+      "avg_latency_s": 0.267,
+      "throughput_tokens_per_s": 329.24,
+      "peak_memory_gb": 0.75,
+      "speedup": "3.80x"
+    },
+    "ollama": {
+      "avg_latency_s": 0.525,
+      "throughput_tokens_per_s": 224.00,
+      "load_time_s": 1.47,
+      "speedup": "2.59x"
+    }
+  },
+  
+  "deliverables_checklist": {
+    "A_data_preparation": {
+      "status": "COMPLETE",
+      "notes": "Dolly 15k split into 12k/2k/1k train/dev/test"
+    },
+    "B_fine_tuning": {
+      "B1_transformers_peft": "COMPLETE",
+      "B2_unsloth": "COMPLETE"
+    },
+    "C_evaluation": {
+      "C1_bleu": "COMPLETE",
+      "C2_rouge": "COMPLETE",
+      "C3_bertscore": "PARTIAL (OOM with large model)",
+      "C4_human_eval": "COMPLETE (5 samples rated)",
+      "C5_before_after": "COMPLETE"
+    },
+    "D_inference_benchmarks": {
+      "D1_transformers": "COMPLETE",
+      "D2_unsloth": "COMPLETE",
+      "D3_vllm": "COMPLETE",
+      "D4_ollama": "COMPLETE"
+    }
+  },
+  
+  "conclusions": {
+    "training_comparison": "Transformers+PEFT achieved slightly lower eval_loss (1.3518 vs 1.3612) but Unsloth showed better automatic metrics (BLEU 8.19 vs 5.96)",
+    "inference_winner": "vLLM provides best throughput (329 tok/s, 3.8x faster than base Transformers)",
+    "ollama_advantage": "Ollama has fastest load time (1.47s) and simple deployment via GGUF format",
+    "recommendation": "Use Transformers+PEFT for training flexibility, vLLM for production inference, Ollama for local deployment"
+  }
+}

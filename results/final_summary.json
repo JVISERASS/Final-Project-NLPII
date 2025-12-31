@@ -1,0 +1,41 @@
+{
+  "project": "NLP II Final Project - Fine-tune Once, Serve Anywhere",
+  "model": {
+    "base": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "parameters": "1.1B",
+    "quantization": "4-bit NF4 (QLoRA)"
+  },
+  "dataset": {
+    "name": "Databricks Dolly 15k",
+    "train_samples": 12000,
+    "val_samples": 2000,
+    "test_samples": 1000
+  },
+  "training": {
+    "framework": "Transformers + PEFT (QLoRA)",
+    "lora_rank": 16,
+    "epochs": 3,
+    "effective_batch_size": 16,
+    "learning_rate": 0.0002,
+    "training_time_minutes": 64.66,
+    "train_loss": 1.413,
+    "eval_loss": 1.3518,
+    "peak_memory_gb": 2.48
+  },
+  "evaluation": {
+    "num_samples": 50,
+    "metrics": {
+      "bleu": 16.72,
+      "rouge1": 0.406,
+      "rouge2": 0.2291,
+      "rougeL": 0.3569
+    }
+  },
+  "inference_benchmark": {
+    "framework": "Transformers + PEFT",
+    "throughput_tokens_per_s": 86.57,
+    "latency_s": 1.028,
+    "latency_std": 0.111,
+    "peak_memory_gb": 1.03
+  }
+}

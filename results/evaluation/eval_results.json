@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-12-27T14:58:38.528107",
+  "model_path": "outputs/transformers/20251227_134936/merged_model",
+  "num_samples": 50,
+  "metrics": {
+    "bleu": 16.71735977515202,
+    "rouge1": 0.40595471840874053,
+    "rouge2": 0.22908140173214916,
+    "rougeL": 0.3569491038977606
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "model_name": "Unsloth",
+  "model_path": "outputs/unsloth/20251227_160819/merged_model",
+  "timestamp": "2025-12-30T22:15:31.284317",
+  "num_samples": 50,
+  "generation_time_s": 29.612297534942627,
+  "metrics": {
+    "bleu": 6.586218629956138,
+    "bleu_1": 21.69233768691348,
+    "bleu_2": 12.038835774354899,
+    "rouge_1": 0.30301447117586194,
+    "rouge_2": 0.1009698957682846,
+    "rouge_l": 0.23613036074886795,
+    "bertscore_precision": 0.8392392992973328,
+    "bertscore_recall": 0.824795663356781,
+    "bertscore_f1": 0.8315508365631104
+  }
+}

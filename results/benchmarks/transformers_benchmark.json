@@ -1,0 +1,18 @@
+{
+  "framework": "transformers",
+  "timestamp": "2025-12-31T00:35:20.887280",
+  "model_path": "outputs/transformers/20251230_233941/merged_model",
+  "config": {
+    "num_prompts": 5,
+    "num_trials": 3,
+    "max_new_tokens": 256
+  },
+  "results": {
+    "avg_latency_s": 1.5007131576538086,
+    "std_latency_s": 0.9063342586159704,
+    "avg_tokens_generated": 144.06666666666666,
+    "avg_throughput_tokens_per_s": 95.4556417451537,
+    "std_throughput": 0.0,
+    "peak_memory_gb": 0.9974231719970703
+  }
+}

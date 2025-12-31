@@ -1,0 +1,18 @@
+{
+  "model_name": "Transformers",
+  "model_path": "outputs/transformers/20251230_233941/merged_model",
+  "timestamp": "2025-12-31T00:34:51.864602",
+  "num_samples": 50,
+  "generation_time_s": 41.03586459159851,
+  "metrics": {
+    "bleu": 5.2255788002117205,
+    "bleu_1": 17.506571356531225,
+    "bleu_2": 10.980015578128397,
+    "rouge_1": 0.25620870522921035,
+    "rouge_2": 0.08466192667751761,
+    "rouge_l": 0.1947185134472478,
+    "bertscore_precision": 0.8267045021057129,
+    "bertscore_recall": 0.8163180351257324,
+    "bertscore_f1": 0.8209097981452942
+  }
+}

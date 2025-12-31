@@ -1,0 +1,14 @@
+{
+  "framework": "transformers_peft",
+  "training_time_seconds": 3879.5726890563965,
+  "training_time_minutes": 64.6595448176066,
+  "peak_memory_gb": 2.4784679412841797,
+  "train_loss": 1.4130373753441705,
+  "train_samples": 12000,
+  "epochs": 3,
+  "effective_batch_size": 16,
+  "lora_rank": 16,
+  "learning_rate": 0.0002,
+  "timestamp": "2025-12-27T14:54:27.535978",
+  "eval_loss": 1.3518348932266235
+}

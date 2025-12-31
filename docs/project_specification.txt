@@ -1,0 +1,163 @@
+================================================================================
+                    NATURAL LANGUAGE PROCESSING II - FINAL PROJECT
+                    Fine-tune Once, Serve Anywhere:
+                    Transformers, Unsloth, vLLM & Ollama
+                    Academic Year 2025/2026
+================================================================================
+
+1. OVERVIEW
+-----------
+The objective of this final project is to gain practical experience with modern 
+Large Language Model (LLM) frameworks for fine-tuning and inference. Throughout 
+the lectures, we have focused on understanding the underlying principles of 
+large language models: how transformers work, how fine-tuning and alignment 
+techniques are formulated, and how efficiency and scalability are achieved.
+
+You will explore, compare, and critically analyze the workflows and performance 
+of the following frameworks:
+  • Hugging Face Transformers
+  • Unsloth
+  • vLLM
+  • Ollama
+
+Teams: 3–4 members (GitHub Classroom via Moodle)
+
+================================================================================
+2. LEARNING GOALS
+================================================================================
+By completing this project, you will:
+  • Learn how to fine-tune small-scale LLMs using Transformers and Unsloth
+  • Explore efficient fine-tuning techniques: LoRA, QLoRA, quantization, PEFT
+  • Evaluate model performance before and after fine-tuning
+  • Benchmark inference performance (latency, throughput, memory usage)
+  • Develop qualitative insights about developer experience and usability
+
+================================================================================
+3. DATASET AND MODEL
+================================================================================
+DATASET: Databricks Dolly 15k
+  - 15k instruction–response pairs
+  - Permissive license
+  - May downsample for efficiency
+
+BASE MODEL: TinyLlama-1.1B-Chat
+  - Compact model suitable for consumer GPUs
+  - Supports 4-bit or 8-bit quantization
+  - Alternative models (≤ 2–3B parameters) allowed if justified
+
+================================================================================
+4. TASKS AND REQUIREMENTS
+================================================================================
+
+A. DATA PREPARATION
+-------------------
+  • Split dataset: train/dev/test (e.g., 12k/2k/1k)
+  • Optionally downsample for faster iteration
+
+B. FINE-TUNING EXPERIMENTS
+--------------------------
+Two fine-tuning runs using the same model and dataset:
+
+1. Transformers + PEFT:
+   - Fine-tune using Hugging Face Trainer and peft library
+   - Use LoRA or QLoRA (quantized version)
+
+2. Unsloth:
+   - Fine-tune using Unsloth's optimized pipeline
+   - Faster and more memory-efficient training
+
+DOCUMENT:
+  • Training time and memory consumption
+  • Hyperparameters and techniques (quantization, LoRA rank, α, schedulers)
+  • Challenges encountered and solutions
+
+C. EVALUATION OF EFFECTIVENESS
+------------------------------
+Compare model performance before vs. after fine-tuning:
+
+AUTOMATIC METRICS:
+  • BLEU: n-gram overlap with reference responses
+  • ROUGE-L: longest common subsequence overlap
+  • BERTScore: semantic similarity via pretrained embeddings
+
+HUMAN EVALUATION (5 random prompts, scale 1–5):
+  • Helpfulness
+  • Factuality
+  • Instruction-following
+
+D. INFERENCE BENCHMARKING
+-------------------------
+Evaluate inference performance using ALL FOUR frameworks:
+  • Transformers
+  • Unsloth
+  • vLLM
+  • Ollama
+
+METRICS:
+  • Latency per request (seconds)
+  • Throughput (tokens/sec)
+  • Peak memory (RAM/VRAM)
+
+Ensure fair comparison:
+  • Fix parameters (temperature, max tokens)
+  • Average across multiple trials
+
+E. QUALITATIVE FRAMEWORK COMPARISON
+-----------------------------------
+Include a reflective section describing:
+  • Ease of setup and debugging
+  • Documentation quality
+  • GPU/CPU friendliness
+  • Adapter handling and model export
+  • Personal experience and preferences
+
+================================================================================
+5. DELIVERABLES
+================================================================================
+
+A. GITHUB REPOSITORY
+--------------------
+  • README.md with setup instructions, dependencies, hardware details
+  • Fine-tuning scripts for both frameworks
+  • Inference scripts for all frameworks
+  • results/ folder with CSVs, plots, and evaluation data
+
+B. REPORT (PDF, max. 8 pages, excluding cover and index)
+--------------------------------------------------------
+Structure:
+  1. Introduction and motivation
+  2. Methodology: data, models, and fine-tuning setup
+  3. Evaluation: quantitative and qualitative results
+  4. Framework comparison: performance and usability
+  5. Discussion, conclusions, and future work
+
+================================================================================
+6. SCHEDULE (INDICATIVE)
+================================================================================
+WEEK 1:
+  - Team creation on GitHub Classroom
+  - Environment setup
+  - Dataset preparation
+  - Baseline zero-shot evaluation
+  - Begin fine-tuning with Transformers + PEFT
+
+WEEK 2:
+  - Complete fine-tuning runs (Transformers and Unsloth)
+  - Begin evaluation (automatic and human metrics)
+  - Preliminary comparison of training efficiency
+
+WEEK 3:
+  - Perform inference benchmarking (all 4 frameworks)
+  - Finalize report, discussion, reproducibility checks
+
+================================================================================
+7. RESOURCES
+================================================================================
+  • Transformers Documentation: https://huggingface.co/docs/transformers
+  • Unsloth Documentation: https://github.com/unslothai/unsloth
+  • vLLM Documentation: https://docs.vllm.ai
+  • Ollama Documentation: https://ollama.ai
+  • Databricks Dolly 15k: https://huggingface.co/datasets/databricks/databricks-dolly-15k
+  • TinyLlama Model Card: https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0
+
+================================================================================

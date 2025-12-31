@@ -1,0 +1,18 @@
+{
+  "framework": "unsloth",
+  "timestamp": "2025-12-31T02:19:29.496190",
+  "model_path": "outputs/transformers/20251231_003936/merged_model",
+  "config": {
+    "num_prompts": 5,
+    "num_trials": 3,
+    "max_new_tokens": 256
+  },
+  "results": {
+    "avg_latency_s": 0.9177801609039307,
+    "std_latency_s": 0.5689949169754981,
+    "avg_tokens_generated": 126.73333333333333,
+    "avg_throughput_tokens_per_s": 135.8314167258022,
+    "std_throughput": 0.0,
+    "peak_memory_gb": 1.1373190879821777
+  }
+}

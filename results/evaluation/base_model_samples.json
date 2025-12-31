@@ -1,0 +1,52 @@
+[
+  {
+    "prompt": "### Instruction:\nName 5 possible fuel sources for a futuristic spaceship\n\n### Response:\n",
+    "reference": "Ion fusion, hyper drive, flux capacitator, solar sails, alien venom",
+    "generated": "1. Fuel Cell\nFuel cells are a promising source of energy for space travel. They generate electricity through a chemical reaction between hydrogen and oxygen. The hydrogen is derived from water, which "
+  },
+  {
+    "prompt": "### Instruction:\nWho won the March Madness Mens Basketball Tournament in 2022?\n\n### Response:\n",
+    "reference": "The University Kansas Jayhawks",
+    "generated": "The answer is: Duke Blue Devils."
+  },
+  {
+    "prompt": "### Instruction:\nWhat are some ways that I can reduce the latency of my API?\n\n### Response:\n",
+    "reference": "To reduce the latency of your API, you could consider caching any database operations you may have, reducing the number of network requests required, or scaling up the number of instances of your serv",
+    "generated": "1. Use HTTP/2 for improved latency: HTTP/2 is a new protocol that allows for faster streaming of data. By using HTTP/2, you can reduce the latency of your API.\n\n2. Use a Content Delivery Network (CDN)"
+  },
+  {
+    "prompt": "### Instruction:\nExtract all of the dates mentioned in this paragraph and list them using bullets in the format {Date} - {Description}\n\n### Context:\nThe Carolina Biological Supply Company was founded in 1927 by Dr. Thomas E. Powell Jr., a young geology and biology professor at Elon College (now Elon University). During the 1920s, science teachers had to collect most of the materials they used in their classes and laboratories, which took considerable time away from their primary responsibilities. Like other teachers, Dr. Powell spent much of his own time in the field gathering specimens for his classes. Because he usually got more than he needed, he sold the surplus to his colleagues. His efforts grew into Carolina Biological Supply Company, as Powell foresaw a need for his collecting abilities in the coming years.\n\n### Response:\n",
+    "reference": "• 1927 - This is when the Carolina Biological Supply Company was founded.\n• 1920s - During this time period science teachers had to collect most of the materials they used in their classes and laborat",
+    "generated": "- {Date} - “The Carolina Biological Supply Company was founded in 1927 by Dr. Thomas E. Powell Jr., a young geology and biology professor at Elon College (now Elon University). During the 1920s, scien"
+  },
+  {
+    "prompt": "### Instruction:\nWhich ones of the following are considered nutrient-dense foods: soda, vegetables, fruits, chips, whole grains, seafood, cookies, eggs, beans, peas, lentils, unsalted nuts and seeds, fat-free and low-fat dairy products, fried chicken, lean meats and poultry.\n\n### Response:\n",
+    "reference": "Vegetables, fruits, whole grains, seafood, eggs, beans, peas, and lentils, unsalted nuts and seeds, fat-free and low-fat dairy products, and lean meats and poultry are nutrient-dense foods.",
+    "generated": "Nutrient-dense foods are considered to be those that contain essential nutrients such as protein, vitamins, and minerals, as well as being low in added sugars and saturated fats. These foods can be fo"
+  },
+  {
+    "prompt": "### Instruction:\nHow long is an Ironman triathlon?\n\n### Response:\n",
+    "reference": "An Ironman triathlon is 140.6 miles long. This is considered an endurance event, and frequently takes competitors over 10 hours to complete. The triathlon consists of 3 events: swimming, biking, and r",
+    "generated": "An Ironman triathlon is a full-distance triathlon consisting of three races, each with a distance of 140.6 kilometers (87.2 miles), including a swim, a bike, and a run. The duration of an Ironman race"
+  },
+  {
+    "prompt": "### Instruction:\nHow much did Shaffer donate?\n\n### Context:\nIn 2018, Butler County Community College created The Shaffer School of Nursing and Allied Health after Shaffer donated $1 million to the school.\n\n### Response:\n",
+    "reference": "$1 million",
+    "generated": "According to a news release from Butler County Community College, Shaffer donated $1 million to the school. The donation was made in honor of her late husband, who was a nurse, and in memory of her pa"
+  },
+  {
+    "prompt": "### Instruction:\nPlease provide me with ideas for dinner tonight.\n\n### Response:\n",
+    "reference": "Sure! Here are 2 ideas. \n\n1) Ordering in:\n\nYou can see what restaurants in your area offer home delivery, and select something that works well for you! Some common things to order are Pizza, Sushi, Ta",
+    "generated": "1. Grilled salmon with roasted vegetables\n2. Veggie stir-fry with brown rice\n3. Baked chicken with roasted vegetables\n4. Chicken and wild rice soup\n5. Quinoa salad with roasted vegetables\n6. Spaghetti"
+  },
+  {
+    "prompt": "### Instruction:\nhow to give a great presentation\n\n### Response:\n",
+    "reference": "Giving a great presentation requires a combination of effective planning, engaging delivery, and thoughtful audience engagement. Here are some tips to help you create and deliver a successful presenta",
+    "generated": "Sure! Here's a great presentation tip that will help you give a great presentation:\n\n- Prepare your presentation thoroughly and practice it multiple times to ensure you're confident and comfortable wi"
+  },
+  {
+    "prompt": "### Instruction:\nWhere are good places for a family to visit in Portland Oregon?\n\n### Response:\n",
+    "reference": "1. The Oregon Museum of Science and Industry (OMSI) is a science and technology museum in Portland Oregon. The museum has many interactive exhibits, a theatre and a decommissioned naval submarine. \n\n2",
+    "generated": "Sure, here are some great family-friendly attractions in Portland:\n\n1. Portland Observatory - A historic observatory with views of the city and the Columbia River.\n2. Portland Art Museum - A world-cla"
+  }
+]

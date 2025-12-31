@@ -1,0 +1,97 @@
+benchmark:
+  batch_sizes:
+  - 1
+  - 4
+  - 8
+  input_lengths:
+  - 64
+  - 128
+  - 256
+  num_benchmark_runs: 10
+  num_warmup_runs: 3
+  output_lengths:
+  - 128
+  - 256
+  - 512
+dataset:
+  max_samples: null
+  name: databricks/databricks-dolly-15k
+  test_size: 1000
+  train_size: 12000
+  val_size: 2000
+evaluation:
+  bertscore_model: microsoft/deberta-xlarge-mnli
+  metrics:
+  - bleu
+  - rouge
+  - bertscore
+  num_human_eval_samples: 5
+hardware:
+  device: cuda
+  gpu_name: NVIDIA RTX 4070 SUPER
+  mixed_precision: bf16
+  vram_gb: 12
+inference:
+  do_sample: true
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+  temperature: 0.7
+  top_k: 50
+  top_p: 0.9
+lora:
+  bias: none
+  lora_alpha: 32
+  lora_dropout: 0.05
+  r: 16
+  target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  task_type: CAUSAL_LM
+model:
+  dtype: bfloat16
+  max_seq_length: 1024
+  model_type: causal_lm
+  name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+output:
+  base_dir: outputs
+  checkpoints_dir: checkpoints
+  results_dir: results
+  transformers_dir: outputs/transformers
+  unsloth_dir: outputs/unsloth
+project:
+  name: nlp2-fine-tune-llm
+  seed: 42
+  version: 1.0.0
+quantization:
+  bnb_4bit_compute_dtype: bfloat16
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_use_double_quant: true
+  load_in_4bit: true
+  load_in_8bit: false
+training:
+  bf16: true
+  dataloader_num_workers: 4
+  dataloader_pin_memory: true
+  eval_steps: 100
+  fp16: false
+  gradient_accumulation_steps: 8
+  gradient_checkpointing: true
+  learning_rate: 0.0002
+  logging_steps: 10
+  lr_scheduler_type: cosine
+  max_grad_norm: 0.3
+  max_steps: -1
+  num_train_epochs: 3
+  optim: adamw_8bit
+  per_device_eval_batch_size: 2
+  per_device_train_batch_size: 2
+  save_steps: 100
+  save_total_limit: 3
+  warmup_ratio: 0.03
+  weight_decay: 0.001
+unsloth:
+  fast_inference: true
+  random_state: 42
+  use_rslora: true

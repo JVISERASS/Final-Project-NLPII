@@ -1,0 +1,129 @@
+# ============================================================================
+# NLP2 Final Project - Configuration
+# Fine-tune Once, Serve Anywhere: Transformers, Unsloth, vLLM & Ollama
+# ============================================================================
+
+# Project paths
+project:
+  name: "nlp2-fine-tune-llm"
+  version: "1.0.0"
+  seed: 42
+
+# Hardware Configuration (RTX 4070 SUPER - 12GB VRAM)
+hardware:
+  device: "cuda"
+  gpu_name: "NVIDIA RTX 4070 SUPER"
+  vram_gb: 12
+  mixed_precision: "bf16"  
+  
+# Model Configuration
+model:
+  name: "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+  model_type: "causal_lm"
+  max_seq_length: 1024  # Reduced from 2048 to save memory
+  dtype: "bfloat16"
+  
+# Quantization Settings (optimized for 12GB VRAM)
+quantization:
+  load_in_4bit: true
+  load_in_8bit: false
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_quant_type: "nf4"  
+  bnb_4bit_use_double_quant: true  
+
+# Dataset Configuration
+dataset:
+  name: "databricks/databricks-dolly-15k"
+  train_size: 12000
+  val_size: 2000
+  test_size: 1000
+  max_samples: null  
+  
+# LoRA/PEFT Configuration
+lora:
+  r: 16                    # LoRA rank - reduced for memory
+  lora_alpha: 32           # Scaling factor (usually 2x rank)
+  lora_dropout: 0.05       # Dropout for regularization
+  target_modules:          # Modules to apply LoRA
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# Training Configuration
+training:
+  # Batch sizes optimized for 12GB VRAM
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  gradient_accumulation_steps: 8  
+  
+  # Training duration
+  num_train_epochs: 3
+  max_steps: -1  
+  
+  # Learning rate schedule
+  learning_rate: 2.0e-4
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.03
+  weight_decay: 0.001
+  
+  # Optimization
+  optim: "adamw_8bit"  # Memory efficient optimizer
+  max_grad_norm: 0.3
+  
+  # Logging & Saving
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+  save_total_limit: 3
+  
+  # Mixed precision
+  bf16: true
+  fp16: false
+  
+  # Efficiency
+  gradient_checkpointing: true
+  dataloader_num_workers: 4
+  dataloader_pin_memory: true
+
+# Unsloth-specific Configuration
+unsloth:
+  fast_inference: true
+  use_rslora: true  # Rank-Stabilized LoRA
+  random_state: 42
+
+# Inference Configuration
+inference:
+  max_new_tokens: 512
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+  repetition_penalty: 1.1
+  do_sample: true
+  
+# Benchmarking Configuration  
+benchmark:
+  num_warmup_runs: 3
+  num_benchmark_runs: 10
+  batch_sizes: [1, 4, 8]
+  input_lengths: [64, 128, 256]
+  output_lengths: [128, 256, 512]
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - "bleu"
+    - "rouge"
+    - "bertscore"
+  bertscore_model: "microsoft/deberta-xlarge-mnli"
+  num_human_eval_samples: 5
+  
+# Output Directories
+output:
+  base_dir: "outputs"
+  transformers_dir: "outputs/transformers"
+  unsloth_dir: "outputs/unsloth"
+  results_dir: "results"
+  checkpoints_dir: "checkpoints"
